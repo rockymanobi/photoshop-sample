@@ -20,12 +20,13 @@ npm install
 
 ```bash
 # generator-core のディレクトリに移動する
-cd ../../
+cd ../../../
 # generator-core 経由で本プラグインを実行
-node app -f test/plugins/photoshop-saple
+node app -f test/plugins/photoshop-sample
 ```
 
 表示されたIPにiPhoneブラウザでアクセスし、ファイルをアップロードしてみる。
-iPhoneとPCが同じネットワークに居る事を確認してください！
+iPhoneとPCが同じネットワークに居る事(同じwifiに接続されてること)を確認してください！
+*テザリングだとちょっと遅いですね*
 
 
