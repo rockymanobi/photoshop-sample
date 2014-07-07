@@ -51,17 +51,11 @@
       generator.addMenuItem("fp", "First Plugin", true, false);
 
       // Register events on Photoshop
-      _generator.onPhotoshopEvent("currentDocumentChanged", handleCurrentDocumentChanged);
-      _generator.onPhotoshopEvent("imageChanged", handleImageChanged);
-      _generator.onPhotoshopEvent("toolChanged", handleToolChanged);
-
       ev.on('kicked', evHoge );
 
     }
     process.nextTick(initLater);
     process.nextTick(listening);
-
-
 
   }
 
