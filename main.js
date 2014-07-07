@@ -63,7 +63,8 @@
   /*********** HELPERS ***********/
 
   function sendJavascript(str){
-      _generator.evaluateJSXString(str).then(
+      _generator.evaluateJSXString(str)
+      .then(
           function(result){
               console.log(result);
           },
