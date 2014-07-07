@@ -111,7 +111,7 @@
     };
 
     exApp.get('/', function(req, res){
-      res.sendfile('./test/plugins/my-plugin/index.html');
+      res.sendfile( __dirname + '/index.html');
     });
     exApp.post('/upload', routes.upload.post );
 
