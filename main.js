@@ -26,6 +26,13 @@
   var _ = require('underscore');
   var _generator;
 
+  // Environment Settings
+  var env = process.env.NODE_ENV;
+  var ENVIRONMENT = {
+    development: "development"
+  };
+  var envIsDevelopent = env === ENVIRONMENT.development;
+
   var EventEmitter = require('events').EventEmitter;
   var ev = new EventEmitter();
 
