@@ -102,7 +102,6 @@
     
 
     var exApp = express();
-    //exApp.use(bodyParser( {uploadDir:'./uploads',keepExtensions: true  } ));
     exApp.use(busboy()); 
     exApp.use(methodOverride());
 
@@ -142,30 +141,32 @@
     //fs.readFile(testurl)
 
     var _maxLength = maxLength || 400; // 何も入力がなければ400pxサイズにする
+    var uploadDirPath = __dirname + '/upload';
+
     var ECT = require('ect');
     var renderer = ECT({ root : __dirname + '/photoshop_scripts' });
-    var data = { fname : filename, maxLength: _maxLength };
+    var data = { fname : filename, maxLength: _maxLength, uploadDirPath: uploadDirPath };
     var html = renderer.render('template.ect', data);
     console.log(html);
 
     _generator.evaluateJSXString(html);
 
     return;
-    fs.unlink( __dirname + '/../../../upload/' + filename , function (err) {
-      if (err) throw err;
-      console.log('successfully deleted /tmp/hello');
-    });
+    // fs.unlink( __dirname + '/upload/' + filename , function (err) {
+    //   if (err) throw err;
+    //   console.log('successfully deleted /tmp/hello');
+    // });
 
 
-    fs.readFile(__dirname + "/photoshop.txt", "utf-8", function (err, txt) {
-        var JSX = txt;
-        console.log( __dirname )
-        console.log( txt );
-        console.log(err)
-       _generator.evaluateJSXString(JSX);
-        console.log("hoge")
-        //console.dir( res );
-    })
+    //fs.readFile(__dirname + "/photoshop.txt", "utf-8", function (err, txt) {
+    //    var JSX = txt;
+    //    console.log( __dirname )
+    //    console.log( txt );
+    //    console.log(err)
+    //   _generator.evaluateJSXString(JSX);
+    //    console.log("hoge")
+    //    //console.dir( res );
+    //})
   }
 
 

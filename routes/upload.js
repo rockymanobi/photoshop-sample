@@ -17,7 +17,7 @@ module.exports = function( event ){
       });
       req.busboy.on('file', function (fieldname, file, filename) {
           console.log("Uploading: " + filename); 
-          fstream = fs.createWriteStream(__dirname + '/../../../../upload/' + filename);
+          fstream = fs.createWriteStream(__dirname + '/../upload/' + filename);
           file.pipe(fstream);
           fstream.on('close', function () {
             // TODO: maxLengthの代入が危険すぎるので注意ね

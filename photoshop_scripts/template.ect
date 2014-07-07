@@ -6,7 +6,7 @@ layObj.kind = LayerKind.TEXT;
 layObj.textItem.contents = "Hello World from Node.js !!";
 layObj.textItem.size = 36;
 */
-var fileObj = new File("/Users/rocky/wrk/photoshop_node/generator-core/upload/<%- @fname %>");
+var fileObj = new File("<%- @uploadDirPath %>/<%- @fname %>");
 open(fileObj);
 
 
