@@ -30,19 +30,14 @@
   var ev = new EventEmitter();
 
   function init(generator) {
-    console.log( _ );
     _generator = generator;
-    console.log("Hello world");
 
     function evHoge( filename, maxLength ){
-      console.log("yhaaaa");
       show( filename, maxLength );
     }
 
 
     function initLater() {
-
-      console.log("init later");
 
       // Get data from Photoshop via _generator.getDocumentInfo
       //requestEntireDocument();
@@ -64,22 +59,7 @@
   }
 
 
-  /*********** EVENTS ***********/
-
-  function handleCurrentDocumentChanged(id) {
-    console.log("handleCurrentDocumentChanged: "+id)
-    //setCurrentDocumentId(id);
-  }
-
-  function handleImageChanged(document) {
-    console.log("Image " + document.id + " was changed:");//, stringify(document));
-  }
-
-  function handleToolChanged(document){
-    console.log("Tool changed " + document.id + " was changed:");//, stringify(document));
-  }
   /*********** HELPERS ***********/
-
 
   function sendJavascript(str){
       _generator.evaluateJSXString(str).then(
@@ -116,8 +96,6 @@
     exApp.post('/upload', routes.upload.post );
 
     exApp.post('/postimage', function(req, res){
-      console.log( req.param("ababa") );
-      console.log( req.param("image") );
       res.sendfile('./test/plugins/my-plugin/index.html');
       //sendJavascript("alert( 'ALERT FROM BROWSER!! ' );");
       // connect-form adds the req.form object
@@ -147,26 +125,10 @@
     var renderer = ECT({ root : __dirname + '/photoshop_scripts' });
     var data = { fname : filename, maxLength: _maxLength, uploadDirPath: uploadDirPath };
     var html = renderer.render('template.ect', data);
-    console.log(html);
 
     _generator.evaluateJSXString(html);
 
     return;
-    // fs.unlink( __dirname + '/upload/' + filename , function (err) {
-    //   if (err) throw err;
-    //   console.log('successfully deleted /tmp/hello');
-    // });
-
-
-    //fs.readFile(__dirname + "/photoshop.txt", "utf-8", function (err, txt) {
-    //    var JSX = txt;
-    //    console.log( __dirname )
-    //    console.log( txt );
-    //    console.log(err)
-    //   _generator.evaluateJSXString(JSX);
-    //    console.log("hoge")
-    //    //console.dir( res );
-    //})
   }
 
 
