@@ -87,6 +87,7 @@
     exApp.use(busboy()); 
     exApp.use(methodOverride());
 
+    exApp.use(express.static(__dirname + '/public'));
 
     var routes = {
       upload : require('./routes/upload')(ev)
