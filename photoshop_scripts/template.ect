@@ -1,0 +1,28 @@
+var docObj = app.documents[0];
+
+var layObj = docObj.artLayers.add();
+/*
+layObj.kind = LayerKind.TEXT;
+layObj.textItem.contents = "Hello World from Node.js !!";
+layObj.textItem.size = 36;
+*/
+var fileObj = new File("/Users/rocky/wrk/photoshop_node/generator-core/upload/<%- @fname %>");
+open(fileObj);
+
+
+var maxLength = <%- @maxLength %>;
+var fHeight = maxLength;
+var fWidth = maxLength;
+
+//activeDocument.resizeImage(100,80);
+// Resize on portrait/landscape 
+if (activeDocument.height > app.activeDocument.width) {
+  activeDocument.resizeImage(null,UnitValue(fHeight,"px"),null,ResampleMethod.BICUBIC);
+}else{
+  activeDocument.resizeImage(UnitValue(fWidth,"px"),null,null,ResampleMethod.BICUBIC);
+} 
+
+activeDocument.selection.selectAll();
+activeDocument.activeLayer.copy();
+activeDocument.close(SaveOptions.DONOTSAVECHANGES);
+docObj.paste();

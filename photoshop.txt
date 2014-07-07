@@ -1,0 +1,15 @@
+var docObj = app.documents[0];
+
+var layObj = docObj.artLayers.add();
+/*
+layObj.kind = LayerKind.TEXT;
+layObj.textItem.contents = "Hello World from Node.js !!";
+layObj.textItem.size = 36;
+*/
+var fileObj = new File("/Users/rocky/wrk/photoshop_node/generator-core/upload/image.jpg");
+open(fileObj);
+
+activeDocument.selection.selectAll();
+activeDocument.activeLayer.copy();
+activeDocument.close(SaveOptions.DONOTSAVECHANGES);
+docObj.paste();
