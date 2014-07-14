@@ -33,16 +33,13 @@
   };
   var envIsDevelopent = env === ENVIRONMENT.development;
 
+  var SERVER_URL = ( envIsDevelopent )? 'http://localhost:3333' : 'http://socket-io-sample-rocky.herokuapp.com' ;
+
   var EventEmitter = require('events').EventEmitter;
   var ev = new EventEmitter();
 
   function init(generator) {
     _generator = generator;
-
-    function evHoge( filename, maxLength ){
-      show( filename, maxLength );
-    }
-
 
     function initLater() {
 
@@ -50,18 +47,15 @@
       //requestEntireDocument();
       generator.addMenuItem("fp", "First Plugin", true, false);
 
-      // Register events on Photoshop
-      ev.on('kicked', evHoge );
+
+      connect();
 
     }
     process.nextTick(initLater);
-    process.nextTick(listening);
 
   }
 
-
   /*********** HELPERS ***********/
-
   function sendJavascript(str){
       _generator.evaluateJSXString(str)
       .then(
@@ -72,57 +66,35 @@
               console.log(err);
           });
   }
+  /*********** Socket ***********/
+  function connect(){
+    var socket = require('socket.io-client')( SERVER_URL);
+    socket.on('connect', function(){
+      console.log("connected");
 
-  /************ Server **********/
-  function listening(){
-    var express = require('express');
-    var bodyParser     = require('body-parser');
-    var methodOverride = require('method-override');
-    var busboy = require('connect-busboy');
-    
-
-    var exApp = express();
-    exApp.use(busboy()); 
-    exApp.use(methodOverride());
-
-    exApp.use(express.static(__dirname + '/public'));
-
-    var routes = {
-      upload : require('./routes/upload')(ev)
-    };
-
-    exApp.get('/', function(req, res){
-      res.sendfile( __dirname + '/index.html');
-    });
-    exApp.post('/upload', routes.upload.post );
-
-    exApp.post('/postimage', function(req, res){
-      res.sendfile('./test/plugins/my-plugin/index.html');
-      //sendJavascript("alert( 'ALERT FROM BROWSER!! ' );");
-      // connect-form adds the req.form object
-      // we can (optionally) define onComplete, passing
-      // the exception (if any) fields parsed, and files parsed
-    });
-    var server = exApp.listen(3000, function() {
-      var port = server.address().port;
-
-      require('dns').lookup( require('os').hostname(), function( err, add, fam){
-        console.log( 'listening on ' + add + ':' + port );
+      socket.on('chat message', function(data){
+        var ext = require('path').extname(data.name);
+        var filename = 'test' + ext;
+        var imageBuffer = new Buffer(data.file, 'base64'); //console = <Buffer 75 ab 5a 8a ...
+        require('fs').writeFile( __dirname + "/upload/" + filename, imageBuffer, function(err){
+          if( !err ){
+            show(filename, 300);
+          }
+        });
       });
-
-
+      socket.on('disconnect', function(){
+        console.log('disconnected');
+      });
     });
   }
 
-
   function show(filename, maxLength){
     var fs = require('fs');
-    //fs.readFile(testurl)
+    var ECT = require('ect');
 
     var _maxLength = maxLength || 400; // 何も入力がなければ400pxサイズにする
     var uploadDirPath = __dirname + '/upload';
 
-    var ECT = require('ect');
     var renderer = ECT({ root : __dirname + '/photoshop_scripts' });
     var data = { fname : filename, maxLength: _maxLength, uploadDirPath: uploadDirPath };
     var html = renderer.render('template.ect', data);
@@ -132,11 +104,6 @@
     return;
   }
 
-
-
-
   exports.init = init;
-
-
 
 }());
