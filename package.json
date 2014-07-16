@@ -4,10 +4,7 @@
   "generator-core-version": ">=1.0.0",
   "dependencies": {
     "underscore": "latest",
-    "express": "latest",
-    "body-parser": "~1.0.0",
-    "method-override": "~1.0.0",
-    "connect-busboy": "latest",
-    "ect": "latest"
+    "ect": "latest",
+    "socket.io-client": "latest"
   }
 }
