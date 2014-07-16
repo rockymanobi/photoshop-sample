@@ -28,12 +28,9 @@
 
   // Environment Settings
   var env = process.env.NODE_ENV;
-  var ENVIRONMENT = {
-    development: "development"
-  };
-  var envIsDevelopent = env === ENVIRONMENT.development;
 
-  var SERVER_URL = ( envIsDevelopent )? 'http://localhost:3333' : 'http://socket-io-sample-rocky.herokuapp.com' ;
+  var CONFIG = require('./config')(env);
+  var SERVER_URL = CONFIG.hostUrl;
 
   var EventEmitter = require('events').EventEmitter;
   var ev = new EventEmitter();
@@ -68,6 +65,7 @@
   }
   /*********** Socket ***********/
   function connect(){
+    console.log('connecting to ' + SERVER_URL);
     var socket = require('socket.io-client')( SERVER_URL);
     socket.on('connect', function(){
       console.log("connected");
