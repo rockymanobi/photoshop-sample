@@ -73,10 +73,11 @@
       socket.on('chat message', function(data){
         var ext = require('path').extname(data.name);
         var filename = 'test' + ext;
+        var maxSize = data.maxSize || 300;
         var imageBuffer = new Buffer(data.file, 'base64'); //console = <Buffer 75 ab 5a 8a ...
         require('fs').writeFile( __dirname + "/upload/" + filename, imageBuffer, function(err){
           if( !err ){
-            show(filename, 300);
+            show(filename, maxSize);
           }
         });
       });
