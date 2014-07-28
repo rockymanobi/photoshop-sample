@@ -72,22 +72,23 @@
     socket.on('connect', function(){
       console.log("connected");
 
-      socket.on('chat message', function(data){
-        cleanUploadDir();
-        var ext = require('path').extname(data.name);
-        var uuidV4 = uuid.v4();
-        var filename = uuidV4 + ext;
-        var maxSize = data.maxSize || 300;
-        var imageBuffer = new Buffer(data.file, 'base64'); //console = <Buffer 75 ab 5a 8a ...
-        require('fs').writeFile( __dirname + "/upload/" + filename, imageBuffer, function(err){
-          if( !err ){
-            show(filename, maxSize);
-          }
-        });
+    });
+
+    socket.on('chat message', function(data){
+      cleanUploadDir();
+      var ext = require('path').extname(data.name);
+      var uuidV4 = uuid.v4();
+      var filename = uuidV4 + ext;
+      var maxSize = data.maxSize || 300;
+      var imageBuffer = new Buffer(data.file, 'base64'); //console = <Buffer 75 ab 5a 8a ...
+      require('fs').writeFile( __dirname + "/upload/" + filename, imageBuffer, function(err){
+        if( !err ){
+          show(filename, maxSize);
+        }
       });
-      socket.on('disconnect', function(){
-        console.log('disconnected');
-      });
+    });
+    socket.on('disconnect', function(){
+      console.log('disconnected');
     });
   }
 
