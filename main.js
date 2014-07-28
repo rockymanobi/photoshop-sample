@@ -44,7 +44,7 @@
 
       // Get data from Photoshop via _generator.getDocumentInfo
       //requestEntireDocument();
-      generator.addMenuItem("fp", "First Plugin", true, false);
+      generator.addMenuItem("fp", "Spps-Demo", true, false);
 
 
       connect();
