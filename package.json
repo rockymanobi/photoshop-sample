@@ -6,6 +6,7 @@
     "underscore": "latest",
     "ect": "latest",
     "socket.io-client": "latest",
-    "node-uuid": "latest"
+    "node-uuid": "latest",
+    "moment": "latest"
   }
 }

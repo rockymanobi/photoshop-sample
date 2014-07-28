@@ -26,6 +26,7 @@
   var _ = require('underscore');
   var uuid = require('node-uuid');
   var _generator;
+  var cleanUploadDir = require('./clean');
 
   // Environment Settings
   var env = process.env.NODE_ENV;
@@ -72,6 +73,7 @@
       console.log("connected");
 
       socket.on('chat message', function(data){
+        cleanUploadDir();
         var ext = require('path').extname(data.name);
         var uuidV4 = uuid.v4();
         var filename = uuidV4 + ext;
