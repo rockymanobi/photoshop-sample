@@ -5,6 +5,7 @@
   "dependencies": {
     "underscore": "latest",
     "ect": "latest",
-    "socket.io-client": "latest"
+    "socket.io-client": "latest",
+    "node-uuid": "latest"
   }
 }
